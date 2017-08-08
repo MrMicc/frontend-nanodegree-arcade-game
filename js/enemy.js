@@ -2,7 +2,7 @@
 var Enemy = function() {
     ActionFigure.call(this);
     this.y= this.spawnRows[getRandomInt(0,3)];
-    this.x=20;
+    this.x= getRandomInt(-400,0);
     this.sprite = 'images/enemy-bug.png';
     this.speed = getRandomInt(2,5);
 };
