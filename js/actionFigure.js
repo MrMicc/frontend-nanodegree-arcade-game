@@ -16,6 +16,5 @@ ActionFigure.prototype.update = function (dt) {
  * Draw in the screen an object type of ActionFigure
  */
 ActionFigure.prototype.render = function () {
-
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 };

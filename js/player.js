@@ -7,12 +7,40 @@ var Player = function () {
 
     //Checks if needs to freeze the movement of the player
     this.freeze = false;
+
+    this.score =0;
 };
 
 
 Player.prototype = Object.create(ActionFigure.prototype);
 Player.prototype.constructor = Player;
 
+/**
+ * Rendering everthing regarding the Player
+ */
+Player.prototype.render = function () {
+    ctx.clearRect(0,0,700,50); //cleaning some dusts
+    ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
+    console.log('score: '+ this.score);
+    this.renderScore();
+};
+
+/**
+ * Function responsible to render the palyer score
+ */
+Player.prototype.renderScore = function () {
+    ctx.font = '30px Impact';
+    ctx.strokeStyle = 'black';
+    ctx.lineWidth = 3;
+    ctx.fillStyle = 'white';
+    ctx.fillText('score: '+this.score,10,50);
+    ctx.strokeText('score: '+this.score,10,50);
+};
+
+
+/**
+ * Function responsible to reset player position
+ */
 Player.prototype.reset = function () {
     var player = this;
     player.freeze = true; //if player is on the top freeze
@@ -25,6 +53,26 @@ Player.prototype.reset = function () {
 
 };
 
+/**
+ * Function responsible do add player points
+ */
+Player.prototype.addPoint = function () {
+    this.score +=100;
+};
+
+/**
+ * Function responsible to remove points when player was hited
+ */
+Player.prototype.hitPoint = function () {
+    this.score -= 20;
+};
+
+
+Player.prototype.hit = function () {
+  this.reset();
+  this.hitPoint();
+};
+
 Player.prototype.handleInput = function (key) {
     if(this.freeze === false){
       switch (key) {
@@ -32,8 +80,8 @@ Player.prototype.handleInput = function (key) {
               if(this.y>=0){
                 this.y -=80;
                 if(this.y<60){
-
                     this.reset();
+                    this.addPoint();
                  }
               }
               break;
