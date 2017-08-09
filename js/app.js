@@ -8,7 +8,7 @@
 // Now instantiate your objects.
 // Place all enemy objects in an array called allEnemies
 
-var allEnemies = setUpEnemies(6);
+var allEnemies = setUpEnemies(1);
 function setUpEnemies(enemieSize) {
     var enemies = [];
     for (var i = 0; i< enemieSize; i++){
@@ -44,3 +44,18 @@ document.addEventListener('keyup', function(e) {
 
     player.handleInput(allowedKeys[e.keyCode]);
 });
+
+
+function gameOver() {
+    player.reset();
+    allEnemies.forEach(function (enemy) {
+        enemy.reset();
+    });
+    renderGameOver();
+}
+
+function renderGameOver(){
+    ctx.fillStyle = 'red';
+    ctx.font = 'Bold 80px Sans';
+    ctx.fillText('GAME OVER', 100, 100);
+}

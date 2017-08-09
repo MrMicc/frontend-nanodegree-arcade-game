@@ -4,6 +4,7 @@
  */
 var ActionFigure = function () {
     this.sprite = 'images/enemy-bug.png';
+    this.freeze = false; //Checks if needs to freeze the movement of the player
 };
 
 /**
@@ -17,4 +18,8 @@ ActionFigure.prototype.update = function (dt) {
  */
 ActionFigure.prototype.render = function () {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
+
+    ctx.strokeStyle = 'darked';
+    ctx.lineWidth = 0.2;
+    ctx.strokeRect(this.x,this.y, this.x+100, this.y+80 );
 };

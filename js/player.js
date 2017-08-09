@@ -5,9 +5,6 @@ var Player = function () {
     this.y = 380;
     this.sprite = 'images/char-boy.png';
 
-    //Checks if needs to freeze the movement of the player
-    this.freeze = false;
-
     this.score =0;
 };
 
