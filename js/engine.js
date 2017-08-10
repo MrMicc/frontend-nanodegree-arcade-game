@@ -80,43 +80,25 @@ var Engine = (function(global) {
      */
     function update(dt) {
         updateEntities(dt);
-        console.log('colision: '+checkCollisions());
-        if(checkCollisions()){
-            console.log('Game Over');
-            gameOver();
-        }
+        checkCollisions();
     }
 
 
-
+    /**
+     *This called during the update function and iterate over all enemies to check if the player it is at the same position
+     *
+     */
     function checkCollisions() {
-        console.log(allEnemies.length);
-        for(var enemy = 0; enemy < allEnemies.length; enemy++) {
-            var sameRow = player.y >= allEnemies[enemy].y && player.y <= allEnemies[enemy].y;
-            if (sameRow) { //Player and Enemy are at the same row
-                var hit = player.x >= allEnemies[enemy].x && player.x <= (allEnemies[enemy].x);
-                if (hit) { //Player and Enemy are at the column
-                    player.hit();//player and enemy are at the same slot
-                    return true;
-                }
-            }
-        }
-        return false;
-       /* return allEnemies.forEach(function (enemy) {
-
+      allEnemies.forEach(function (enemy) {
             var sameRow = player.y >= enemy.y && player.y <= enemy.y;
-            //console.log('sameRow: '+sameRow);
-           // console.log('pX: '+player.x+' pY: '+player.y+' --- eX:'+(enemy.x + enemy.bodyWidth)+' eY: '+(enemy.y));
-            if(sameRow){ //Player and Enemy are at the same row
-                var hit = player.x >= enemy.x && player.x <= (enemy.x + enemy.bodyWidth);
-                if(hit){ //Player and Enemy are at the column
-                  //  console.log('Oi');
+            if (sameRow) { //Player and Enemy are at the same row
+                var hit = ((enemy.x + enemy.width/2) >= player.x) && ((enemy.x + enemy.width/2) <= player.x+player.width);
+                if (hit ) { //Player and Enemy are at the column
                     player.hit();//player and enemy are at the same slot
-                    return true;
+                    gameOver();
                 }
             }
-            return false;
-        });*/
+        });
     }
 
     /* This is called by the update function and loops through all of the
@@ -188,6 +170,9 @@ var Engine = (function(global) {
         });
 
         player.render();
+        if(allEnemies[0].freeze && player.freeze){
+            gameOver();
+        }
     }
 
     /* This function does nothing but it could have been a good place to

@@ -4,8 +4,9 @@ var Player = function () {
     this.x = 200;
     this.y = 380;
     this.sprite = 'images/char-boy.png';
-
+    this.spriteLife = 'images/Heart.png';
     this.score =0;
+    this.life = 5;
 };
 
 
@@ -18,8 +19,8 @@ Player.prototype.constructor = Player;
 Player.prototype.render = function () {
     ctx.clearRect(0,0,700,50); //cleaning some dusts
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
-    console.log('score: '+ this.score);
     this.renderScore();
+    this.renderLife();
 };
 
 /**
@@ -41,7 +42,6 @@ Player.prototype.renderScore = function () {
 Player.prototype.reset = function () {
     var player = this;
     player.freeze = true; //if player is on the top freeze
-
     setTimeout(function () { //reseting the player position after 1000ms
         player.x = 200;
         player.y = 380;
@@ -66,8 +66,26 @@ Player.prototype.hitPoint = function () {
 
 
 Player.prototype.hit = function () {
-  this.reset();
-  this.hitPoint();
+    if(this.freeze!==true){
+        this.reset();
+        this.hitPoint();
+        this.removeLife();
+    }
+};
+
+Player.prototype.removeLife = function () {
+    if(this.life>0){
+        this.life--;
+    }
+};
+
+Player.prototype.renderLife = function () {
+   // var x=300, y=10;
+  for(var i=0; i<this.life; i++){
+      console.log(this.life+' '+i);
+     // ctx.drawImage(Resources.get(this.spriteLife), x+50, y, 50, 50);
+  }
+
 };
 
 Player.prototype.handleInput = function (key) {
