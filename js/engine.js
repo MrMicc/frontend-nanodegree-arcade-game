@@ -96,7 +96,6 @@ var Engine = (function(global) {
                 var checkHit = ((enemy.x + enemy.width/2) >= player.x) && ((enemy.x + enemy.width/2) <= player.x+player.width);
                 if (checkHit ) { //Player and Enemy are at the column
                     hit();//player and enemy are at the same slot
-                    //gameOver();
                 }
             }
         });
@@ -114,7 +113,7 @@ var Engine = (function(global) {
             enemy.update(dt);
         });
         player.update();
-        //incraseDificulty();
+        increaseDificulty();
     }
 
     /* This function initially draws the "game level", it will then call

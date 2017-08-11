@@ -71,7 +71,9 @@ Player.prototype.addPoint = function () {
  * Function responsible to remove points when player was hited
  */
 Player.prototype.hitPoint = function () {
-    this.score -= 20;
+    if(this.score >0){
+        this.score -= 20;
+    }
 };
 
 

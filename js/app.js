@@ -65,12 +65,17 @@ function renderGameOver(){
     ctx.fillText('GAME OVER', 15, 250);
 }
 
-function incraseDificulty() {
-    console.log('socore%100 '+player.score%100);
+function increaseDificulty() {
+    console.log('score%100 '+player.score%100);
     if((player.score%100 === 0)&& player.onTop() ){
         allEnemies.forEach(function (enemy) {
-            console.log(enemy.speed);
-            enemy.speed +=1;
-        })
+            enemy.canSpeed = true;
+            setTimeout(function () {
+               if(enemy.canSpeed){
+                    enemy.speed +=1;
+                    enemy.canSpeed = false;
+               }
+            },1000);
+        });
     }
 }

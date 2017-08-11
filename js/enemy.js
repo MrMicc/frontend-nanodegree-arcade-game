@@ -8,6 +8,7 @@ var Enemy = function() {
     this.x = getRandomInt(-400,-20); //setting up a random spawn position
     this.sprite = 'images/enemy-bug.png';
     this.speed = getRandomInt(2,5); //setting up a random speed for the bugs
+    this.canSpeed = false;
    // this.bodyWidth = 100; //size of body in px
 };
 Enemy.prototype = Object.create(ActionFigure.prototype);
@@ -39,6 +40,7 @@ Enemy.prototype.reset = function () {
         enemy.x = getRandomInt(-400,-100);
         enemy.y = parseInt(enemy.spawnRows[getRandomInt(0,3)]);
         enemy.freeze = false;
+        this.speed = getRandomInt(2,5);
     }, 1000, enemy);
 };
 
