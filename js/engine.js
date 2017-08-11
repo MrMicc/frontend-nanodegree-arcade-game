@@ -80,7 +80,25 @@ var Engine = (function(global) {
      */
     function update(dt) {
         updateEntities(dt);
-        // checkCollisions();
+        checkCollisions();
+
+    }
+
+
+    /**
+     *This called during the update function and iterate over all enemies to check if the player it is at the same position
+     *
+     */
+    function checkCollisions() {
+      allEnemies.forEach(function (enemy) {
+            var sameRow = player.y >= enemy.y && player.y <= enemy.y;
+            if (sameRow) { //Player and Enemy are at the same row
+                var checkHit = ((enemy.x + enemy.width/2) >= player.x) && ((enemy.x + enemy.width/2) <= player.x+player.width);
+                if (checkHit ) { //Player and Enemy are at the column
+                    hit();//player and enemy are at the same slot
+                }
+            }
+        });
     }
 
     /* This is called by the update function and loops through all of the
@@ -95,6 +113,7 @@ var Engine = (function(global) {
             enemy.update(dt);
         });
         player.update();
+        increaseDificulty();
     }
 
     /* This function initially draws the "game level", it will then call
@@ -152,6 +171,9 @@ var Engine = (function(global) {
         });
 
         player.render();
+        if((allEnemies[0].freeze && player.freeze) && (player.life===0)){
+            gameOver();
+        }
     }
 
     /* This function does nothing but it could have been a good place to

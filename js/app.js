@@ -1,35 +1,33 @@
 
+/**
+ * This file is responsible for the rules of the game
+ */
 
-// Now write your own player class
-// This class requires an update(), render() and
-// a handleInput() method.
 
+var allEnemies = setUpEnemies(6); //setting up all enemies
+var player = new Player(); //setting up the player
 
-// Now instantiate your objects.
-// Place all enemy objects in an array called allEnemies
-
-var allEnemies = setUpEnemies(6);
+/**
+ * this function is responsible to make an Enemy array
+ * @param enemieSize - Number of the enemies that will be in the array
+ * @returns {Array} - Array with the number of enemies that was setup in the input
+ */
 function setUpEnemies(enemieSize) {
     var enemies = [];
     for (var i = 0; i< enemieSize; i++){
         enemies.push(new Enemy());
     }
-
     return enemies;
 }
-var player = new Player();
-
-// Place the player object in a variable called player
-
 
 /**
- * Function responsible for return a random number
+ * Function responsible for return a random number, given a determine range
  * @param min - value
  * @param max - max value
- * @returns {*} - random number
+ * @returns {*} - random int number
  */
 function getRandomInt(min, max) {
-    return Math.floor(Math.random() * (max - min)) + min;
+    return parseInt((Math.random() * (max - min)) + min);
 }
 
 // This listens for key presses and sends the keys to your
@@ -44,3 +42,40 @@ document.addEventListener('keyup', function(e) {
 
     player.handleInput(allowedKeys[e.keyCode]);
 });
+
+
+function hit(){
+    allEnemies.forEach(function (enemy) {
+        enemy.hit();
+    });
+    player.hit();
+}
+
+function gameOver() {
+    renderGameOver();
+    allEnemies.forEach(function (enemy) {
+        enemy.reset();
+    });
+    player.rebootConfig();
+}
+
+function renderGameOver(){
+    ctx.fillStyle = 'red';
+    ctx.font = 'Bold 75px Sans';
+    ctx.fillText('GAME OVER', 15, 250);
+}
+
+function increaseDificulty() {
+    console.log('score%100 '+player.score%100);
+    if((player.score%100 === 0)&& player.onTop() ){
+        allEnemies.forEach(function (enemy) {
+            enemy.canSpeed = true;
+            setTimeout(function () {
+               if(enemy.canSpeed){
+                    enemy.speed +=1;
+                    enemy.canSpeed = false;
+               }
+            },1000);
+        });
+    }
+}

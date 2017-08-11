@@ -4,16 +4,24 @@ var Player = function () {
     this.x = 200;
     this.y = 380;
     this.sprite = 'images/char-boy.png';
-
-    //Checks if needs to freeze the movement of the player
-    this.freeze = false;
-
-    this.score =0;
+    this.spriteLife = 'images/Heart.png';
+    this.score = 0;
+    this.life = 5;
 };
 
 
 Player.prototype = Object.create(ActionFigure.prototype);
 Player.prototype.constructor = Player;
+
+
+Player.prototype.rebootConfig = function(){
+   var player = this;
+     setTimeout(function () { //need a time out or will crash the render off game over
+         player.score = 0;
+         player.life = 5;
+   },1000, player);
+
+};
 
 /**
  * Rendering everthing regarding the Player
@@ -21,8 +29,8 @@ Player.prototype.constructor = Player;
 Player.prototype.render = function () {
     ctx.clearRect(0,0,700,50); //cleaning some dusts
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
-    console.log('score: '+ this.score);
     this.renderScore();
+    this.renderLife();
 };
 
 /**
@@ -44,7 +52,6 @@ Player.prototype.renderScore = function () {
 Player.prototype.reset = function () {
     var player = this;
     player.freeze = true; //if player is on the top freeze
-
     setTimeout(function () { //reseting the player position after 1000ms
         player.x = 200;
         player.y = 380;
@@ -64,13 +71,39 @@ Player.prototype.addPoint = function () {
  * Function responsible to remove points when player was hited
  */
 Player.prototype.hitPoint = function () {
-    this.score -= 20;
+    if(this.score >0){
+        this.score -= 20;
+    }
 };
 
 
 Player.prototype.hit = function () {
-  this.reset();
-  this.hitPoint();
+    if(this.freeze!==true){
+        this.reset();
+        this.hitPoint();
+        this.removeLife();
+    }
+};
+
+Player.prototype.removeLife = function () {
+    if(this.life>0){
+        this.life--;
+    }
+};
+
+Player.prototype.renderLife = function () {
+   var x=250, y=10;
+  for(var i=0; i<this.life; i++){
+      console.log(this.life+' '+i);
+      Resources.load(this.spriteLife);
+      ctx.drawImage(Resources.get(this.spriteLife), x, y, 50, 50);
+      x+=50;
+  }
+
+};
+
+Player.prototype.onTop =function () {
+    return (this.y<60)
 };
 
 Player.prototype.handleInput = function (key) {
@@ -79,7 +112,7 @@ Player.prototype.handleInput = function (key) {
           case 'up':
               if(this.y>=0){
                 this.y -=80;
-                if(this.y<60){
+                if(this.onTop()){
                     this.reset();
                     this.addPoint();
                  }
