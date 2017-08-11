@@ -42,5 +42,13 @@ Enemy.prototype.reset = function () {
     }, 1000, enemy);
 };
 
+Enemy.prototype.hit =function () {
+  var enemy = this;
+  enemy.freeze = true;
+  setTimeout(function (){
+      enemy.freeze = false;
+  },1000, enemy );
+};
+
 
 Enemy.prototype.spawnRows = [60,140,220];

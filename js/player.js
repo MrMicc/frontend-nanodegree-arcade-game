@@ -5,13 +5,23 @@ var Player = function () {
     this.y = 380;
     this.sprite = 'images/char-boy.png';
     this.spriteLife = 'images/Heart.png';
-    this.score =0;
+    this.score = 0;
     this.life = 5;
 };
 
 
 Player.prototype = Object.create(ActionFigure.prototype);
 Player.prototype.constructor = Player;
+
+
+Player.prototype.rebootConfig = function(){
+   var player = this;
+     setTimeout(function () { //need a time out or will crash the render off game over
+         player.score = 0;
+         player.life = 5;
+   },1000, player);
+
+};
 
 /**
  * Rendering everthing regarding the Player
@@ -80,12 +90,18 @@ Player.prototype.removeLife = function () {
 };
 
 Player.prototype.renderLife = function () {
-   // var x=300, y=10;
+   var x=250, y=10;
   for(var i=0; i<this.life; i++){
       console.log(this.life+' '+i);
-     // ctx.drawImage(Resources.get(this.spriteLife), x+50, y, 50, 50);
+      Resources.load(this.spriteLife);
+      ctx.drawImage(Resources.get(this.spriteLife), x, y, 50, 50);
+      x+=50;
   }
 
+};
+
+Player.prototype.onTop =function () {
+    return (this.y<60)
 };
 
 Player.prototype.handleInput = function (key) {
@@ -94,7 +110,7 @@ Player.prototype.handleInput = function (key) {
           case 'up':
               if(this.y>=0){
                 this.y -=80;
-                if(this.y<60){
+                if(this.onTop()){
                     this.reset();
                     this.addPoint();
                  }

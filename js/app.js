@@ -44,15 +44,33 @@ document.addEventListener('keyup', function(e) {
 });
 
 
+function hit(){
+    allEnemies.forEach(function (enemy) {
+        enemy.hit();
+    });
+    player.hit();
+}
+
 function gameOver() {
+    renderGameOver();
     allEnemies.forEach(function (enemy) {
         enemy.reset();
     });
-    renderGameOver();
+    player.rebootConfig();
 }
 
 function renderGameOver(){
     ctx.fillStyle = 'red';
     ctx.font = 'Bold 75px Sans';
     ctx.fillText('GAME OVER', 15, 250);
+}
+
+function incraseDificulty() {
+    console.log('socore%100 '+player.score%100);
+    if((player.score%100 === 0)&& player.onTop() ){
+        allEnemies.forEach(function (enemy) {
+            console.log(enemy.speed);
+            enemy.speed +=1;
+        })
+    }
 }
