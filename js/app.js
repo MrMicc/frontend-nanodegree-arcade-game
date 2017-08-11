@@ -6,6 +6,7 @@
 
 var allEnemies = setUpEnemies(6); //setting up all enemies
 var player = new Player(); //setting up the player
+var rock = new Rock();
 
 /**
  * this function is responsible to make an Enemy array
