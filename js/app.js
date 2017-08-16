@@ -67,8 +67,7 @@ function renderGameOver(){
 }
 
 function increaseDificulty() {
-    console.log('score%100 '+player.score%100);
-    if((player.score%100 === 0)&& player.onTop() ){
+    if((player.score%100 === 0)&& player.onTop() && player.freeze){
         allEnemies.forEach(function (enemy) {
             enemy.canSpeed = true;
             setTimeout(function () {
@@ -78,5 +77,14 @@ function increaseDificulty() {
                }
             },1000);
         });
+    }
+}
+
+function checkCollision(objectA, objectB){
+
+    if(objectA.y >= objectB.y && objectA.y <= objectB.y){
+        return ((objectA.x + objectA.width/2) >= objectB.x) && ((objectA.x + objectA.width/2) <= objectB.x+objectB.width);
+    }else {
+        return false;
     }
 }
