@@ -7,6 +7,8 @@ var Player = function () {
     this.spriteLife = 'images/Heart.png';
     this.score = 0;
     this.life = 5;
+    this.lastX = 200;
+    this.lastY = 380;
 };
 
 
@@ -30,7 +32,6 @@ Player.prototype.render = function () {
     ctx.clearRect(0,0,700,50); //cleaning some dusts
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
     this.renderScore();
-    this.renderLife();
 };
 
 /**
@@ -94,10 +95,11 @@ Player.prototype.removeLife = function () {
 Player.prototype.renderLife = function () {
    var x=250, y=10;
   for(var i=0; i<this.life; i++){
-      console.log(this.life+' '+i);
       Resources.load(this.spriteLife);
-      ctx.drawImage(Resources.get(this.spriteLife), x, y, 50, 50);
-      x+=50;
+      //if(Resources.isReady()){ TODO RENDER error, something is going wrong at the first interation
+          ctx.drawImage(Resources.get(this.spriteLife), x, y, 50, 50);
+          x+=50;
+      //}
   }
 
 };
@@ -136,4 +138,14 @@ Player.prototype.handleInput = function (key) {
       }
     }
 
+};
+
+Player.prototype.update = function () {
+    if(checkCollision(this, rock) && this.life>1){
+        this.x= this.lastX;
+        this.y = this.lastY;
+    }else{
+        this.lastY = this.y;
+        this.lastX = this.x;
+    }
 };
