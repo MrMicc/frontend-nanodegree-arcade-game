@@ -73,7 +73,7 @@ Player.prototype.addPoint = function () {
  */
 Player.prototype.hitPoint = function () {
     if(this.score >0){
-        this.score -= 20;
+        this.score -= 25;
     }
 };
 

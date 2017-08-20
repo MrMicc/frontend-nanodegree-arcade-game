@@ -7,6 +7,7 @@
 var allEnemies = setUpEnemies(6); //setting up all enemies
 var player = new Player(); //setting up the player
 var rock = new Rock();
+var gem = new Gem();
 
 /**
  * this function is responsible to make an Enemy array
@@ -50,6 +51,8 @@ function hit(){
         enemy.hit();
     });
     player.hit();
+    gem.rebootConfig();
+
 }
 
 function gameOver() {
@@ -58,6 +61,7 @@ function gameOver() {
         enemy.reset();
     });
     player.rebootConfig();
+    gem.rebootConfig();
 }
 
 function renderGameOver(){
@@ -82,9 +86,23 @@ function increaseDificulty() {
 
 function checkCollision(objectA, objectB){
 
-    if(objectA.y >= objectB.y && objectA.y <= objectB.y){
-        return ((objectA.x + objectA.width/2) >= objectB.x) && ((objectA.x + objectA.width/2) <= objectB.x+objectB.width);
+    if(objectA.y >= objectB.y && objectA.y <= objectB.y){ //same line
+        return ((objectA.x + objectA.width/2) >= objectB.x) && ((objectA.x + objectA.width/2) <= objectB.x+objectB.width); //same column
     }else {
         return false;
+    }
+}
+
+function makeGems() {
+    if(player.score%10===0 && player.score>50){
+        gem.render();
+    }
+}
+
+function getGems() {
+    if(checkCollision(player,gem)&& gem.wasGet===false){
+        gem.wasGet = true;
+        player.score +=gem.points;
+        gem.rebootConfig();
     }
 }

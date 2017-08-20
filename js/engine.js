@@ -81,6 +81,7 @@ var Engine = (function(global) {
     function update(dt) {
         updateEntities(dt);
         checkCollisions();
+        getGems();
 
     }
 
@@ -91,9 +92,13 @@ var Engine = (function(global) {
      */
     function checkCollisions() {
       allEnemies.forEach(function (enemy) {
+          //  var sameRow = player.y >= enemy.y && player.y <= enemy.y;
+        //    if (sameRow) { //Player and Enemy are at the same row
+                //((enemy.x + enemy.width/2) >= player.x) && ((enemy.x + enemy.width/2) <= player.x+player.width);
+             //   var checkHit =;
                 if ( checkCollision(enemy, player) ) { //Player and Enemy are at the column
                     hit();//player and enemy are at the same slot
-
+            //    }
             }
         });
     }
@@ -164,7 +169,7 @@ var Engine = (function(global) {
          * the render function you have defined.
          */
         rock.render();
-
+        makeGems();
         allEnemies.forEach(function(enemy) {
             enemy.render();
         });
@@ -195,7 +200,11 @@ var Engine = (function(global) {
         'images/grass-block.png',
         'images/enemy-bug.png',
         'images/char-boy.png',
-        'images/Rock.png'
+        'images/Rock.png',
+        'images/Heart.png',
+        'images/Gem Blue.png',
+        'images/Gem Green.png',
+        'images/Gem Orange.png'
     ]);
     Resources.onReady(init);
 
