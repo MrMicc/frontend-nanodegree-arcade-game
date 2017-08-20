@@ -45,35 +45,48 @@ document.addEventListener('keyup', function(e) {
     player.handleInput(allowedKeys[e.keyCode]);
 });
 
-
+/**
+ * When the player is hit then all enemies and player get freeze for some seconds. Whe reboot the type of gem
+ */
 function hit(){
     allEnemies.forEach(function (enemy) {
-        enemy.hit();
+        enemy.hit(); //freezing enemies
     });
-    player.hit();
-    gem.rebootConfig();
+    player.hit(); //freezing and reset the player position
+    gem.rebootConfig(); //reseting the gem config
 
 }
 
+/**
+ * Function responsible for the gameOver rules
+ */
 function gameOver() {
-    renderGameOver();
+    renderGameOver(); //rendering the Game Over message
     allEnemies.forEach(function (enemy) {
-        enemy.reset();
+        enemy.reset(); //reseting the enemies
     });
     player.rebootConfig();
     gem.rebootConfig();
 }
 
+
+/**
+ * Function specialized to config the context that will render the game over message
+ */
 function renderGameOver(){
     ctx.fillStyle = 'red';
     ctx.font = 'Bold 75px Sans';
     ctx.fillText('GAME OVER', 15, 250);
 }
 
+/**
+ * Function that increase the difficulty of the game, by increase the speed of te enemies
+ *
+ */
 function increaseDificulty() {
-    if((player.score%100 === 0)&& player.onTop() && player.freeze){
+    if( player.onTop() && player.freeze){ //if the player is on the top of the map and is is already freezed
         allEnemies.forEach(function (enemy) {
-            enemy.canSpeed = true;
+            enemy.canSpeed = true; //saying that enemy can speedup
             setTimeout(function () {
                if(enemy.canSpeed){
                     enemy.speed +=1;
@@ -84,6 +97,12 @@ function increaseDificulty() {
     }
 }
 
+/**
+ * Function responsible to check if the two objects get colission
+ * @param objectA
+ * @param objectB
+ * @returns {boolean} - true when has collision
+ */
 function checkCollision(objectA, objectB){
 
     if(objectA.y >= objectB.y && objectA.y <= objectB.y){ //same line
@@ -94,7 +113,7 @@ function checkCollision(objectA, objectB){
 }
 
 function makeGems() {
-    if(player.score%10===0 && player.score>50){
+    if((player.score%10===0 || player.score%3===0) && player.score>50){
         gem.render();
     }
 }

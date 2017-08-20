@@ -22,6 +22,9 @@ Gem.prototype.render = function () {
     }
 };
 
+/**
+ * Function responsible to reboot the gem configuration
+ */
 Gem.prototype.rebootConfig = function () {
     var gem = this;
     setTimeout(function () { //need a time out or will crash the render off game over

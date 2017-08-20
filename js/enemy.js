@@ -44,6 +44,9 @@ Enemy.prototype.reset = function () {
     }, 1000, enemy);
 };
 
+/**
+ * Function specialized to freeze the enemy object
+ */
 Enemy.prototype.hit =function () {
   var enemy = this;
   enemy.freeze = true;

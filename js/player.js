@@ -77,15 +77,20 @@ Player.prototype.hitPoint = function () {
     }
 };
 
-
+/**
+ * function specialized when the player het hit, so the player location will be reseted, loose points and life
+ */
 Player.prototype.hit = function () {
     if(this.freeze!==true){
-        this.reset();
-        this.hitPoint();
-        this.removeLife();
+        this.reset(); //reseting position
+        this.hitPoint(); // losing points
+        this.removeLife(); // removing life
     }
 };
 
+/**
+ * function responsible to remove player points
+ */
 Player.prototype.removeLife = function () {
     if(this.life>0){
         this.life--;
