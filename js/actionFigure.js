@@ -9,11 +9,7 @@ var ActionFigure = function () {
     this.height = parseInt(180);
 };
 
-/**
- *update position of the actionFigure
- */
-ActionFigure.prototype.update = function (dt) {
-};
+
 
 /**
  * Draw in the screen an object type of ActionFigure
