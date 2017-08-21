@@ -1,8 +1,8 @@
-#frontend-nanodegree-arcade-game
-##About
+# frontend-nanodegree-arcade-game
+## About
 This arcade game is a fork project from an Nanodegree exercise from Udacity
 
-##Play Instructions
+## Play Instructions
 To run the game, open index.html
 
 Controls and game rules:
@@ -12,7 +12,7 @@ Controls and game rules:
 * collision with bugs decreases lives count and player score
 * collecting a gem adds player score points
 
-##Game Structure
+## Game Structure
 The game has the following structure:
 ```
 DIRECTORY: frontend-nanodegree-arcade-game:
@@ -54,7 +54,7 @@ DIRECTORY: frontend-nanodegree-arcade-game:
     |                |->file: resources.js
     |                |->file: rock.js
 ```
-###Main Files with a small explanation
+### Main Files with a small explanation
 * actionFigure.js
     * A JS file that contain a generic Object for the Enemy and Player Objects
 * app.js
